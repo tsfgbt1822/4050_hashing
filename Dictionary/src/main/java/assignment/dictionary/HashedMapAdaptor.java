@@ -61,7 +61,7 @@ public class HashedMapAdaptor<K,V> implements DictionaryInterface<K,V>,
     @param key An object search key of the desired entry.
     @return True if key is associated with an entry in the
     dictionary. */
-    public boolean contains(Object key)
+    public boolean contains(K key)
     {
         return myTable.containsKey(key);
     }    
