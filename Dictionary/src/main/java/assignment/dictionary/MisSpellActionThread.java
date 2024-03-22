@@ -69,7 +69,7 @@ public class MisSpellActionThread implements Runnable {
 
             while (input.hasNextLine()) {
                 String line = input.nextLine();
-                theDictionary.add(line.trim(), line.trim()); // Assuming the key and value are the same for the dictionary
+                theDictionary.add(line.trim(), line.trim());
             }
             input.close();
             dictionaryLoaded = true;
@@ -92,19 +92,20 @@ public class MisSpellActionThread implements Runnable {
 
             while (input.hasNextLine()) {
                 String line = input.nextLine();
-                String[] words = line.split("\\s+"); // Split line into words based on whitespace
+                String[] words = line.split("\\s+");
 
                 for (String word : words) {
-                    boolean isCorrect = checkWord(word, theDictionary);
-                    Wordlet wordlet = new Wordlet(word, isCorrect); // Assuming Wordlet has a constructor that takes the word and a boolean for correctness
+                    String wordForChecking = word.replaceAll("^(\\p{Punct})+|(\\p{Punct})+$", "");
 
-                    myLines.addWordlet(wordlet); // Add the wordlet to the current line
+                    boolean isCorrect = checkWord(wordForChecking, theDictionary);
+                    System.out.println(wordForChecking + ": " + isCorrect);
+
+                    Wordlet wordlet = new Wordlet(word, isCorrect);
+                    myLines.addWordlet(wordlet);
                 }
 
-                myLines.nextLine(); // Move to the next line after processing one line of text
-
-                // Show the lines on UI
-                showLines(myLines); // You might want to throttle this so it doesn't update too quickly for the user to follow
+                myLines.nextLine();
+                showLines(myLines);
             }
             input.close();
         } catch (FileNotFoundException e) {
@@ -112,7 +113,6 @@ public class MisSpellActionThread implements Runnable {
             e.printStackTrace();
         }
     }
-
 
 
     /**
@@ -135,5 +135,5 @@ public class MisSpellActionThread implements Runnable {
         }
     }
 
-} // end class MisspellActionThread
+}
 

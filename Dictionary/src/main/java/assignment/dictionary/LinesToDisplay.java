@@ -7,18 +7,17 @@ import java.util.Iterator;
  */
 public class LinesToDisplay {
 
-    public static final int LINES = 10; // Display 10 lines
-    private AList<Wordlet>[] lines;     // Assuming AList is similar to ArrayList
+    public static final int LINES = 20;
+    private AList<Wordlet>[] lines;
     private int currentLine;
 
     /**
      * Constructor for objects of class LinesToDisplay.
      */
     public LinesToDisplay() {
-        // Initialize the array of lists
         lines = new AList[LINES];
         for (int i = 0; i < LINES; i++) {
-            lines[i] = new AList<Wordlet>(); // Assuming AList has a default constructor
+            lines[i] = new AList<Wordlet>();
         }
         currentLine = 0;
     }
@@ -27,9 +26,8 @@ public class LinesToDisplay {
      * Add a new wordlet to the current line.
      */
     public void addWordlet(Wordlet w) {
-        // Add the wordlet to the current line
         if (lines[currentLine] != null) {
-            lines[currentLine].add(w); // Assuming AList has an add method
+            lines[currentLine].add(w);
         }
     }
 
@@ -40,11 +38,9 @@ public class LinesToDisplay {
     public void nextLine() {
         currentLine++;
         if (currentLine >= LINES) {
-            // Shift all lines up by one
             for (int i = 1; i < LINES; i++) {
                 lines[i - 1] = lines[i];
             }
-            // Initialize a new line at the end
             lines[LINES - 1] = new AList<Wordlet>();
             currentLine = LINES - 1;
         }
