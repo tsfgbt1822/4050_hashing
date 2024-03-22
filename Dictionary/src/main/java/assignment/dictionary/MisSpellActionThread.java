@@ -63,22 +63,22 @@ public class MisSpellActionThread implements Runnable {
      * @param theDictionary The dictionary to load.
      */
     public void loadDictionary(String theFileName, DictionaryInterface<String, String> theDictionary) {
-        Scanner input;
         try {
-// ADD CODE HERE
-// >>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            File file = new File(theFileName);
+            Scanner input = new Scanner(file);
 
-
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-         
-
-
-        } catch (IOException e) {
-            System.out.println("There was an error in reading or opening the file: " + theFileName);
-            System.out.println(e.getMessage());
+            while (input.hasNextLine()) {
+                String line = input.nextLine();
+                theDictionary.add(line.trim(), line.trim()); // Assuming the key and value are the same for the dictionary
+            }
+            input.close();
+            dictionaryLoaded = true;
+        } catch (FileNotFoundException e) {
+            System.out.println("Dictionary file not found: " + theFileName);
+            e.printStackTrace();
         }
-
     }
+
 
     /**
      * Get the words to check, check them, then put Wordlets into myLines. When
@@ -86,41 +86,34 @@ public class MisSpellActionThread implements Runnable {
      *
      */
     public void checkWords(String theFileName, DictionaryInterface<String, String> theDictionary) {
-        Scanner input;
         try {
- 
-// ADD CODE HERE
-// >>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            File file = new File(theFileName);
+            Scanner input = new Scanner(file);
 
+            while (input.hasNextLine()) {
+                String line = input.nextLine();
+                String[] words = line.split("\\s+"); // Split line into words based on whitespace
 
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
-        } catch (IOException e) {
-            System.out.println("There was an error in reading or opening the file: " + theFileName);
-            System.out.println(e.getMessage());
+                for (String word : words) {
+                    boolean isCorrect = checkWord(word, theDictionary);
+                    // Here, you can decide what to do with each word (e.g., add it to `myLines` with some indication of whether it's correct or not)
+                }
+                // Possibly call showLines here to update the UI with each processed line
+            }
+            input.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Text file not found: " + theFileName);
+            e.printStackTrace();
         }
-
     }
+
 
     /**
      * Check the spelling of a single word.
      *
      */
     public boolean checkWord(String word, DictionaryInterface<String, String> theDictionary) {
-        boolean result = false;
-
-        // ADD CODE HERE
-//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        
-
-
-
-
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-        return result;
-
+        return theDictionary.contains(word);
     }
 
     private void showLines(LinesToDisplay lines) {
