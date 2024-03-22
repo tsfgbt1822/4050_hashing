@@ -28,8 +28,8 @@ public class MisSpellActionThread implements Runnable {
         super();
 
         this.controller = controller;
-        textFileName = "src/main/resources/assignment/dictionary/check.txt";
-        dictionaryFileName = "src/main/resources/assignment/dictionary/sampleDictionary.txt";
+        textFileName = "Dictionary/src/main/resources/assignment/dictionary/check.txt";
+        dictionaryFileName = "Dictionary/src/main/resources/assignment/dictionary/sampleDictionary.txt";
 
         myDictionary = new HashedMapAdaptor<String, String>();
         myLines = new LinesToDisplay();
@@ -96,9 +96,15 @@ public class MisSpellActionThread implements Runnable {
 
                 for (String word : words) {
                     boolean isCorrect = checkWord(word, theDictionary);
-                    // Here, you can decide what to do with each word (e.g., add it to `myLines` with some indication of whether it's correct or not)
+                    Wordlet wordlet = new Wordlet(word, isCorrect); // Assuming Wordlet has a constructor that takes the word and a boolean for correctness
+
+                    myLines.addWordlet(wordlet); // Add the wordlet to the current line
                 }
-                // Possibly call showLines here to update the UI with each processed line
+
+                myLines.nextLine(); // Move to the next line after processing one line of text
+
+                // Show the lines on UI
+                showLines(myLines); // You might want to throttle this so it doesn't update too quickly for the user to follow
             }
             input.close();
         } catch (FileNotFoundException e) {
@@ -106,6 +112,7 @@ public class MisSpellActionThread implements Runnable {
             e.printStackTrace();
         }
     }
+
 
 
     /**
