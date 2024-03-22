@@ -25,7 +25,7 @@ public class Dictionary extends Application {
         Parent root = (Parent) fxmlLoader.load();
         
         Scene scene = new Scene(root);
-        stage.getIcons().add(new Image("file:src/main/resources/assignment/dictionary/UMIcon.png"));
+        stage.getIcons().add(new Image("file:Dictionary/src/main/resources/assignment/dictionary/UMIcon.png"));
         stage.setTitle("Spelling Checker (SampleApplication)");
         stage.setScene(scene);
         stage.show();
